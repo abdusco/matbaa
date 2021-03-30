@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AbdusCo.Matbaa.Pdf;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace AbdusCo.Matbaa
@@ -32,7 +26,14 @@ namespace AbdusCo.Matbaa
             services.AddRouting(options => options.LowercaseUrls = true);
             services.AddControllers();
             services.AddTransient<IContentTypeProvider, FileExtensionContentTypeProvider>();
-            services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "Matbaa", Version = "v1"}); });
+            services.AddSwaggerGen(c =>
+            {
+                c.CustomOperationIds(description =>
+                    description.ActionDescriptor is not ControllerActionDescriptor descriptor
+                        ? null
+                        : $"{descriptor.ControllerName}.{descriptor.ActionName}");
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Matbaa", Version = "v1"});
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +46,7 @@ namespace AbdusCo.Matbaa
                 app.UseSwaggerUI(c =>
                 {
                     c.RoutePrefix = "api";
+                    c.DisplayOperationId();
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Matbaa v1");
                 });
             }
