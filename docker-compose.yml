@@ -1,0 +1,32 @@
+version: '3.7'
+
+services:
+  matbaa:
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_URLS=http://+:80
+      - Browserless__Token=hehe
+      - Browserless__ApiBaseUrl=http://browserless:3000
+    build:
+      context: .
+      target: app
+    ports:
+      - '6060:80'
+  browserless:
+    image: browserless/chrome:latest
+    restart: unless-stopped
+    volumes:
+      - ./workspace:/workspace
+    environment:
+      - PREBOOT_CHROME=true
+      - WORKSPACE_DELETE_EXPIRED=true
+      - WORKSPACE_EXPIRE_DAYS=7
+      - ENABLE_CORS=true
+      - ENABLE_XVBF=true
+      - EXIT_ON_HEALTH_FAILURE=true
+      - CHROME_REFRESH_TIME=3600000
+      - CONNECTION_TIMEOUT=120000
+      - DEFAULT_BLOCK_ADS=true
+      - DEFAULT_LAUNCH_ARGS=["--window-size=1920,1200"]
+      # - DEBUG=browserless/chrome*
+      - TOKEN=hehe
