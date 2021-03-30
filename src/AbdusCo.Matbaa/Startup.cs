@@ -42,17 +42,16 @@ namespace AbdusCo.Matbaa
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    c.RoutePrefix = "api";
-                    c.DisplayOperationId();
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Matbaa v1");
-                });
             }
 
-            app.UseHttpsRedirection();
-
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.RoutePrefix = "api";
+                c.DisplayOperationId();
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Matbaa v1");
+            });
+            
             app.UseRouting();
 
             app.UseAuthorization();
