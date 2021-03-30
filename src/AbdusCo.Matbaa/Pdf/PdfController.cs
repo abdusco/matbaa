@@ -1,12 +1,14 @@
 ﻿using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
-using AbdusCo.Matbaa.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AbdusCo.Matbaa.Pdf
 {
-    public class PdfController : ApiController
+    [ApiController]
+    [Consumes(MediaTypeNames.Application.Json)]
+    [Route("api/[controller]")]
+    public class PdfController : ControllerBase
     {
         private readonly IPdfGenerator _pdfGenerator;
 
@@ -22,7 +24,8 @@ namespace AbdusCo.Matbaa.Pdf
         public async Task<ActionResult> GeneratePdf(PdfRequest request, CancellationToken cancellationToken)
         {
             var stream = await _pdfGenerator.GeneratePdfFromHtmlAsync(request.Html, cancellationToken);
-            return File(stream, MediaTypeNames.Application.Pdf, enableRangeProcessing: true, fileDownloadName:"output.pdf");
+            return File(stream, MediaTypeNames.Application.Pdf, enableRangeProcessing: true,
+                fileDownloadName: "output.pdf");
         }
     }
 }
