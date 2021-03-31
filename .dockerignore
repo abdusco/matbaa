@@ -1,4 +1,5 @@
 .idea
 .git
-bin/
-obj/
+.github
+bin
+obj
