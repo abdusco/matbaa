@@ -5,8 +5,8 @@ services:
     restart: unless-stopped
     environment:
       - ASPNETCORE_URLS=http://+:80
-      - Browserless__Token=hehe
-      - Browserless__ApiBaseUrl=http://browserless:3000
+      - Puppeteer__BrowserWsEndpoint=ws://browserless:3000/webdriver
+      # - Puppeteer__Token=hehe
     build:
       context: .
       target: app
@@ -29,4 +29,4 @@ services:
       - DEFAULT_BLOCK_ADS=true
       - DEFAULT_LAUNCH_ARGS=["--window-size=1920,1200"]
       # - DEBUG=browserless/chrome*
-      - TOKEN=hehe
+      # - TOKEN=hehe

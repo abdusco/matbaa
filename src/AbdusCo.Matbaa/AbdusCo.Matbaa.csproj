@@ -2,6 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,7 +12,11 @@
 
   <ItemGroup>
     <None Remove="Pdf\pdf.js" />
-    <EmbeddedResource Include="Pdf\pdf.js" />
+    <None Remove="Pdf\page.html" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AbdusCo.Matbaa.Abstractions\AbdusCo.Matbaa.Abstractions.csproj" />
   </ItemGroup>
 
 </Project>

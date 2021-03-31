@@ -24,11 +24,24 @@ namespace AbdusCo.Matbaa
         public record EncodedFileResult(string FileName,
                                         string MimeType,
                                         long FileSize,
-                                        string Content);
+                                        string ContentBase64)
+        {
+            /// <summary>
+            /// Concatenate prefix with <see cref="ContentBase64"/> to produce a data URI that can be used in HTML.
+            /// </summary>
+            public string DataUriPrefix => $"data:{MimeType};base64,";
+        }
 
         /// <summary>
-        /// Encode file as base64
+        /// Encode a file as base64
         /// </summary>
+        /// <remarks>
+        /// Convert a file into base64 to include in it HTML as a data URI.
+        /// This can be done in Javascript without using this endpoint.
+        ///
+        /// - [`atob`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/atob#example) function for converting a string to base64.  
+        /// - [`URL.createObjectURL`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL) creates a data URI
+        /// </remarks>
         /// <param name="file"></param>
         /// <returns>Encoded file</returns>
         [HttpPost("base64")]
