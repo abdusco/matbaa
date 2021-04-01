@@ -1,7 +1,7 @@
+using System;
 using System.IO;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
@@ -31,13 +31,15 @@ namespace AbdusCo.Matbaa
             services.AddSwaggerGen(c =>
             {
                 c.OperationFilter<SwaggerFileOperationFilter>();
-                c.IncludeXmlComments(Path.Combine(System.AppContext.BaseDirectory,
+                c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
                     $"{typeof(Startup).Assembly.GetName().Name}.xml"));
                 c.CustomOperationIds(description =>
                     description.ActionDescriptor is not ControllerActionDescriptor descriptor
                         ? null
                         : $"{descriptor.ControllerName}.{descriptor.ActionName}");
-                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Matbaa", Version = "v1"});
+
+                var info = Configuration.GetSection("OpenApi").Get<OpenApiInfo>();
+                c.SwaggerDoc("v1", info);
             });
             services.AddCors(options =>
                 options.AddDefaultPolicy(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin()));
