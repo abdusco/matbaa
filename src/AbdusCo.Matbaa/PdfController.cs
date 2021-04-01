@@ -25,7 +25,7 @@ namespace AbdusCo.Matbaa
         /// </summary>
         /// <remarks>
         /// ## Usage
-        /// You only need to specify HTML. The rest is optional.
+        /// You only need to specify the `html`. The rest is optional.
         /// ```
         /// <![CDATA[
         /// {
@@ -39,15 +39,17 @@ namespace AbdusCo.Matbaa
         /// 
         /// ```html
         /// <h1>hello world</h1>
-        /// <img src="data:image/jpg,base64;" />
+        /// <img src="data:image/jpg,base64;..." />
         /// ```
         /// Or just use plain URLS `https://unsplash.it/200/100`.
-        /// But keep in mind that your request could timeout if you're trying to load a slow resource.
+        /// But keep in mind that if the asset is slow to load, the request could timeout.
         ///
         /// ### PDF Options
-        /// If you're using CSS to set the page size, remember to enable `preferCSSPageSize`. This is enabled by default.
-        /// But you can specify `pdfOptions` to override it.
-        ///  
+        /// - If you're using CSS to set the page size, remember to enable `preferCSSPageSize`. This is enabled by default.
+        /// - If you don't want to display a header/footer, disable it with `displayHeaderFooter` option. This is disabled by default.
+        /// 
+        /// You can override all these defaults in `pdfOptions`.
+        ///
         /// For more information about PDF options, [see Puppeteer docs](https://github.com/puppeteer/puppeteer/blob/main/docs/api.md#pagepdfoptions)
         /// </remarks>
         /// <param name="request"></param>
