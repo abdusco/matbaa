@@ -10,7 +10,7 @@ namespace AbdusCo.Matbaa.Abstractions
         {
             Format = PaperFormat.A4,
             DisplayHeaderFooter = false,
-            PrintBackground = false,
+            PrintBackground = true,
             PreferCSSPageSize = true,
         };
 
